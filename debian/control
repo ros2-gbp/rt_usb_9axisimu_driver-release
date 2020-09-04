@@ -1,0 +1,12 @@
+Source: ros-melodic-rt-usb-9axisimu-driver
+Section: misc
+Priority: optional
+Maintainer: RT Corporation <shop@rt-net.jp>
+Build-Depends: debhelper (>= 9.0.0), ros-melodic-catkin, ros-melodic-roscpp, ros-melodic-roslint, ros-melodic-sensor-msgs, ros-melodic-std-msgs
+Homepage: https://github.com/rt-net/rt_usb_9axisimu_driver/wiki
+Standards-Version: 3.9.2
+
+Package: ros-melodic-rt-usb-9axisimu-driver
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-melodic-roscpp, ros-melodic-roslint, ros-melodic-sensor-msgs, ros-melodic-std-msgs
+Description: The rt_usb_9axisimu_driver package
