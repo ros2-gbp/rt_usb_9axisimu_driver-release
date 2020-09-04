@@ -1,0 +1,12 @@
+Source: ros-kinetic-rt-usb-9axisimu-driver
+Section: misc
+Priority: optional
+Maintainer: RT Corporation <shop@rt-net.jp>
+Build-Depends: debhelper (>= 9.0.0), ros-kinetic-catkin, ros-kinetic-roscpp, ros-kinetic-roslint, ros-kinetic-sensor-msgs, ros-kinetic-std-msgs
+Homepage: https://github.com/rt-net/rt_usb_9axisimu_driver/wiki
+Standards-Version: 3.9.2
+
+Package: ros-kinetic-rt-usb-9axisimu-driver
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-kinetic-roscpp, ros-kinetic-roslint, ros-kinetic-sensor-msgs, ros-kinetic-std-msgs
+Description: The rt_usb_9axisimu_driver package
