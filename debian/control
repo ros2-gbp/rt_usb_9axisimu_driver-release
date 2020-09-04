@@ -1,0 +1,12 @@
+Source: ros-dashing-rt-usb-9axisimu-driver
+Section: misc
+Priority: optional
+Maintainer: RT Corporation <shop@rt-net.jp>
+Build-Depends: debhelper (>= 9.0.0), ros-dashing-ament-cmake, ros-dashing-rclcpp, ros-dashing-rclcpp-components, ros-dashing-rclcpp-lifecycle, ros-dashing-sensor-msgs, ros-dashing-std-msgs, ros-dashing-std-srvs, ros-dashing-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-dashing-rt-usb-9axisimu-driver
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-dashing-rclcpp, ros-dashing-rclcpp-components, ros-dashing-rclcpp-lifecycle, ros-dashing-sensor-msgs, ros-dashing-std-msgs, ros-dashing-std-srvs, ros-dashing-ros-workspace
+Description: The rt_usb_9axisimu_driver package
