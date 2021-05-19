@@ -1,3 +1,4 @@
+
 /*
  * rt_usb_9axisimu_driver_node.cpp
  *
@@ -31,20 +32,81 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <memory>
-#include "rclcpp/rclcpp.hpp"
+#include <string>
 
-#include "rt_usb_9axisimu_driver/rt_usb_9axisimu_driver_component.hpp"
+#include "ros/ros.h"
+#include "rt_usb_9axisimu_driver/rt_usb_9axisimu_driver.hpp"
 
-// #include "rt_usb_9axisimu_driver/rt_usb_9axisimu_binary_mode.hpp"
-
-int main(int argc, char * argv[])
+int main(int argc, char** argv)
 {
-  rclcpp::init(argc, argv);
-  rclcpp::executors::SingleThreadedExecutor exec;
-  rclcpp::NodeOptions options;
-  auto driver = std::make_shared<rt_usb_9axisimu_driver::Driver>(options);
-  exec.add_node(driver->get_node_base_interface());
-  exec.spin();
-  rclcpp::shutdown();
+  // init ROS node
+  ros::init(argc, argv, "rt_usb_9axisimu_driver");
+
+  std::string imu_port = std::string("/dev/ttyACM0");
+  ros::param::get("~port", imu_port);
+  std::string imu_frame_id = std::string("imu_link");
+  ros::param::get("~frame_id", imu_frame_id);
+  rt_usb_9axisimu::Consts imu_consts;
+  double imu_stddev_linear_acceleration = imu_consts.DEFAULT_LINEAR_ACCELERATION_STDDEV;
+  ros::param::get("~linear_acceleration_stddev", imu_stddev_linear_acceleration);
+  double imu_stddev_angular_velocity = imu_consts.DEFAULT_ANGULAR_VELOCITY_STDDEV;
+  ros::param::get("~angular_velocity_stddev", imu_stddev_angular_velocity);
+  double imu_stddev_magnetic_field = imu_consts.DEFAULT_MAGNETIC_FIELD_STDDEV;
+  ros::param::get("~magnetic_field_stddev", imu_stddev_magnetic_field);
+
+  RtUsb9axisimuRosDriver driver(imu_port);
+  driver.setImuFrameIdName(imu_frame_id);
+  driver.setImuStdDev(imu_stddev_linear_acceleration, imu_stddev_angular_velocity, imu_stddev_magnetic_field);
+
+  if (driver.startCommunication())
+  {
+    while (ros::ok() && driver.hasCompletedFormatCheck() == false)
+    {
+      driver.checkDataFormat();
+    }
+
+    if (ros::ok() && driver.hasCompletedFormatCheck())
+    {
+      ROS_INFO("Format check has completed.");
+      if (driver.hasAsciiDataFormat())
+      {
+        ROS_INFO("Data format is ascii.");
+      }
+      else if (driver.hasBinaryDataFormat())
+      {
+        ROS_INFO("Data format is binary.");
+      }
+      else
+      {
+        ROS_ERROR("Data format is neither binary nor ascii.");
+      }
+    }
+
+    if (driver.hasAsciiDataFormat() || driver.hasBinaryDataFormat())
+    {
+      while (ros::ok())
+      {
+        if (driver.readSensorData())
+        {
+          if (driver.hasRefreshedImuData())
+          {
+            driver.publishImuData();
+          }
+        }
+        else
+        {
+          ROS_ERROR("readSensorData() returns false, please check your devices.\n");
+        }
+      }
+    }
+    driver.stopCommunication();
+  }
+  else
+  {
+    ROS_ERROR("Error opening sensor device, please re-check your devices.\n");
+  }
+
+  ROS_INFO("Shutting down RT imu driver complete.\n");
+
+  return 0;
 }
