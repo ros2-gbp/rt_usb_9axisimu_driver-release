@@ -1,0 +1,12 @@
+Source: ros-noetic-rt-usb-9axisimu-driver
+Section: misc
+Priority: optional
+Maintainer: RT Corporation <shop@rt-net.jp>
+Build-Depends: debhelper (>= 9.0.0), ros-noetic-catkin, ros-noetic-roscpp, ros-noetic-roslint, ros-noetic-sensor-msgs, ros-noetic-std-msgs
+Homepage: https://github.com/rt-net/rt_usb_9axisimu_driver/wiki
+Standards-Version: 3.9.2
+
+Package: ros-noetic-rt-usb-9axisimu-driver
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-noetic-roscpp, ros-noetic-roslint, ros-noetic-sensor-msgs, ros-noetic-std-msgs
+Description: The rt_usb_9axisimu_driver package
