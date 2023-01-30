@@ -1,0 +1,69 @@
+ros-humble-rt-usb-9axisimu-driver (2.0.2-1bullseye) bullseye; urgency=high
+
+  * Support Humble (#42 <https://github.com/rt-net/rt_usb_9axisimu_driver/issues/42>)
+  * Update README to add Foxy support (ROS 2 branch) (#33 <https://github.com/rt-net/rt_usb_9axisimu_driver/issues/33>)
+  * Contributors: Daisuke Sato, Shuhei Kozasa
+
+ -- RT Corporation <shop@rt-net.jp>  Wed, 25 Jan 2023 15:00:00 -0000
+
+ros-humble-rt-usb-9axisimu-driver (2.0.1-1bullseye) bullseye; urgency=high
+
+  * Update for foxy (#29 <https://github.com/rt-net/rt_usb_9axisimu_driver/issues/29>)
+  * Contributors: Shota Aoki
+
+ -- RT Corporation <shop@rt-net.jp>  Mon, 30 Nov 2020 15:00:00 -0000
+
+ros-humble-rt-usb-9axisimu-driver (2.0.0-1bullseye) bullseye; urgency=high
+
+  * Migrate to ROS 2 Dashing (#26 <https://github.com/rt-net/rt_usb_9axisimu_driver/issues/26>)
+  * Contributors: Shota Aoki
+
+ -- RT Corporation <shop@rt-net.jp>  Wed, 02 Sep 2020 15:00:00 -0000
+
+ros-humble-rt-usb-9axisimu-driver (1.0.0-1bullseye) bullseye; urgency=high
+
+  * Contributors: Daisuke Sato, Shota Aoki
+
+ -- RT Corporation <shop@rt-net.jp>  Mon, 20 Jul 2020 15:00:00 -0000
+
+ros-humble-rt-usb-9axisimu-driver (0.2.0-1bullseye) bullseye; urgency=high
+
+  * Close node & port at device plugout
+  * Fix wrong data output
+  * Fix serial port attributes
+  * Add serial port settings after port open()
+  * Add required attribute to launch file
+  * Fix CMake Warnings
+  * Add a port argument to launch file
+  * Merge pull request #5 <https://github.com/Tiryoh/rt_usb_9axisimu_driver/issues/5> from pazeshun/secure-read-bytes
+    Continue reading until all data comes
+  * Continue reading until all data comes
+  * Don't use travis-python
+  * Fix typo in stddev
+  * Merge pull request #2 <https://github.com/Tiryoh/rt_usb_9axisimu_driver/issues/2> from pazeshun/add-travis-test
+    Add travis test
+  * Add build status to README.md
+  * Add .travis.yml
+  * Contributors: RT Corp, Shota Aoki, ShotaAk, Shun Hasegawa, pazeshun
+
+ -- RT Corporation <shop@rt-net.jp>  Fri, 20 Dec 2019 15:00:00 -0000
+
+ros-humble-rt-usb-9axisimu-driver (0.1.2-1bullseye) bullseye; urgency=high
+
+
+
+ -- RT Corporation <shop@rt-net.jp>  Wed, 09 Mar 2016 15:00:00 -0000
+
+ros-humble-rt-usb-9axisimu-driver (0.1.1-1bullseye) bullseye; urgency=high
+
+  * update to manage different firmware versions
+
+ -- RT Corporation <shop@rt-net.jp>  Tue, 29 Sep 2015 15:00:00 -0000
+
+ros-humble-rt-usb-9axisimu-driver (0.1.0-1bullseye) bullseye; urgency=high
+
+  * first release for ROS indigo
+
+ -- RT Corporation <shop@rt-net.jp>  Fri, 25 Sep 2015 15:00:00 -0000
+
+
