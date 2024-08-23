@@ -44,14 +44,38 @@
 #include "sensor_msgs/msg/magnetic_field.hpp"
 #include "std_msgs/msg/float64.hpp"
 
-class RtUsb9axisimuRosDriver : public rt_usb_9axisimu::SerialPort
+class RtUsb9axisimuRosDriver
 {
-private:
-  // ros::NodeHandle nh_;
+public:
+  explicit RtUsb9axisimuRosDriver(std::string serialport);
+  RtUsb9axisimuRosDriver(std::unique_ptr<rt_usb_9axisimu::SerialPort> serial_port);
+  ~RtUsb9axisimuRosDriver();
 
-  // ros::Publisher imu_data_raw_pub_;
-  // ros::Publisher imu_mag_pub_;
-  // ros::Publisher imu_temperature_pub_;
+  enum ReadStatus
+  {
+    SUCCESS = 0,
+    NEED_TO_CONTINUE,
+    FAILURE
+  };
+
+  void setImuFrameIdName(std::string frame_id);
+  void setImuPortName(std::string port);
+  void setImuStdDev(double linear_acceleration, double angular_velocity, double magnetic_field);
+
+  bool startCommunication();
+  void stopCommunication(void);
+  void checkDataFormat(const double timeout = 5.0);
+  bool hasAsciiDataFormat(void);
+  bool hasBinaryDataFormat(void);
+  bool hasRefreshedImuData(void);
+
+  std::unique_ptr<sensor_msgs::msg::Imu> getImuRawDataUniquePtr(const rclcpp::Time timestamp);
+  std::unique_ptr<sensor_msgs::msg::MagneticField> getImuMagUniquePtr(const rclcpp::Time timestamp);
+  std::unique_ptr<std_msgs::msg::Float64> getImuTemperatureUniquePtr(void);
+  ReadStatus readSensorData();
+
+private:
+  std::unique_ptr<rt_usb_9axisimu::SerialPort> serial_port_;
 
   rt_usb_9axisimu::SensorData sensor_data_;
 
@@ -60,6 +84,11 @@ private:
   double angular_velocity_stddev_;
   double magnetic_field_stddev_;
   rt_usb_9axisimu::Consts consts;
+
+  unsigned char bin_read_buffer_[rt_usb_9axisimu::Consts::READ_BUFFER_SIZE];
+  unsigned char ascii_read_buffer_[rt_usb_9axisimu::Consts::READ_BUFFER_SIZE];
+  unsigned int bin_read_buffer_idx_ = 0;
+  unsigned int ascii_read_buffer_idx_ = 0;
 
   enum DataFormat
   {
@@ -70,7 +99,6 @@ private:
     ASCII,
     INCORRECT
   };
-  bool has_completed_format_check_;
   DataFormat data_format_;
   bool has_refreshed_imu_data_;
 
@@ -78,31 +106,11 @@ private:
   int16_t combineByteData(unsigned char data_h, unsigned char data_l);
   // Method to extract binary sensor data from communication buffer
   rt_usb_9axisimu::ImuData<int16_t> extractBinarySensorData(unsigned char * imu_data_buf);
-  bool isBinarySensorData(unsigned char * imu_data_buf);
-  bool readBinaryData(void);
+  bool isBinarySensorData(unsigned char * imu_data_buf, unsigned int data_size);
+  ReadStatus readBinaryData(void);
+  bool isAsciiSensorData(unsigned char * imu_data_buf, unsigned int data_size);
   bool isValidAsciiSensorData(std::vector<std::string> imu_data_vector_buf);
-  bool readAsciiData(void);
-
-public:
-  explicit RtUsb9axisimuRosDriver(std::string serialport);
-  ~RtUsb9axisimuRosDriver();
-
-  void setImuFrameIdName(std::string frame_id);
-  void setImuPortName(std::string port);
-  void setImuStdDev(double linear_acceleration, double angular_velocity, double magnetic_field);
-
-  bool startCommunication();
-  void stopCommunication(void);
-  void checkDataFormat(void);
-  bool hasCompletedFormatCheck(void);
-  bool hasAsciiDataFormat(void);
-  bool hasBinaryDataFormat(void);
-  bool hasRefreshedImuData(void);
-
-  std::unique_ptr<sensor_msgs::msg::Imu> getImuRawDataUniquePtr(const rclcpp::Time timestamp);
-  std::unique_ptr<sensor_msgs::msg::MagneticField> getImuMagUniquePtr(const rclcpp::Time timestamp);
-  std::unique_ptr<std_msgs::msg::Float64> getImuTemperatureUniquePtr(void);
-  bool readSensorData();
+  ReadStatus readAsciiData(void);
 };
 
 #endif  // RT_USB_9AXISIMU_DRIVER__RT_USB_9AXISIMU_DRIVER_HPP_
