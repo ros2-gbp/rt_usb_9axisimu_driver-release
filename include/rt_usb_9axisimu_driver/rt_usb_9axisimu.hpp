@@ -106,6 +106,8 @@ public:
     IMU_ASCII_DATA_SIZE
   };
 
+  static constexpr int READ_BUFFER_SIZE = 512;
+
   // Convertor
   const double CONVERTOR_RAW2G;
   const double CONVERTOR_RAW2DPS;
@@ -178,23 +180,23 @@ public:
   {
   }
 
-  ~SerialPort()
+  virtual ~SerialPort()
   {
     closeSerialPort();
   }
 
-  void setPort(const char * port)
+  virtual void setPort(const char * port)
   {
     port_name_ = port;
   }
 
-  bool openPort(const char * port)
+  virtual bool openPort(const char * port)
   {
     port_name_ = port;
     return openSerialPort();
   }
 
-  bool openSerialPort()
+  virtual bool openSerialPort()
   {
     int fd = 0;
 
@@ -221,7 +223,7 @@ public:
     return fd > 0;
   }
 
-  void closeSerialPort()
+  virtual void closeSerialPort()
   {
     if (port_fd_ > 0) {
       tcsetattr(port_fd_, TCSANOW, &old_settings_);
@@ -230,7 +232,7 @@ public:
     }
   }
 
-  int readFromDevice(unsigned char * buf, unsigned int buf_len)
+  virtual int readFromDevice(unsigned char * buf, unsigned int buf_len)
   {
     if (port_fd_ < 0) {
       return -1;
@@ -239,7 +241,7 @@ public:
     return read(port_fd_, buf, buf_len);
   }
 
-  int writeToDevice(unsigned char * data, unsigned int data_len)
+  virtual int writeToDevice(unsigned char * data, unsigned int data_len)
   {
     if (port_fd_ < 0) {
       return -1;
