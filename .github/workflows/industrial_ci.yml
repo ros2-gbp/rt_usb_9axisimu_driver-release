@@ -15,7 +15,10 @@ jobs:
     strategy:
       matrix:
         env:
-          - { ROS_DISTRO: humble, ROS_REPO: ros, AFTER_SETUP_TARGET_WORKSPACE: 'apt update && apt install -y git' }
+          - { ROS_DISTRO: rolling, ROS_REPO: main}
+          - { ROS_DISTRO: jazzy, ROS_REPO: main}
+    env:
+      AFTER_SETUP_TARGET_WORKSPACE: 'apt update && apt install -y git'
 
     runs-on: ubuntu-latest
     steps:
