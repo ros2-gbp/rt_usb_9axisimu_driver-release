@@ -1,3 +1,26 @@
+## rt_usb_9axisimu_driver (rolling) - 3.0.0-1
+
+The packages in the `rt_usb_9axisimu_driver` repository were released into the `rolling` distro by running `/usr/bin/bloom-release --rosdistro rolling --track rolling rt_usb_9axisimu_driver --edit` on `Wed, 13 Nov 2024 07:08:33 -0000`
+
+The `rt_usb_9axisimu_driver` package was released.
+
+Version of package(s) in repository `rt_usb_9axisimu_driver`:
+
+- upstream repository: https://github.com/rt-net/rt_usb_9axisimu_driver.git
+- release repository: unknown
+- rosdistro version: `null`
+- old version: `null`
+- new version: `3.0.0-1`
+
+Versions of tools used:
+
+- bloom version: `0.12.0`
+- catkin_pkg version: `1.0.0`
+- rosdep version: `0.25.1`
+- rosdistro version: `1.0.1`
+- vcstools version: `0.1.42`
+
+
 ## rt_usb_9axisimu_driver (humble) - 2.1.0-2
 
 The packages in the `rt_usb_9axisimu_driver` repository were released into the `humble` distro by running `/usr/bin/bloom-release --rosdistro humble rt_usb_9axisimu_driver` on `Fri, 23 Aug 2024 07:52:04 -0000`
