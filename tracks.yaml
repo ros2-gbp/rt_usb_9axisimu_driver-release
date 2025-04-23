@@ -126,7 +126,8 @@ tracks:
     ros_distro: kilted
     vcs_type: git
     vcs_uri: https://github.com/rt-net/rt_usb_9axisimu_driver.git
-    version: :{auto}
+    version: 3.0.0
+    version_saved: :{auto}
   kinetic:
     actions:
     - bloom-export-upstream :{vcs_local_uri} :{vcs_type} --tag :{release_tag} --display-uri
